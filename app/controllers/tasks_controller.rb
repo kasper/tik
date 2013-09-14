@@ -22,6 +22,9 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+
+    @users = User.all
+
   end
 
   # POST /tasks
@@ -45,15 +48,17 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.html { redirect_to(tasks_path) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # DELETE /tasks/1
