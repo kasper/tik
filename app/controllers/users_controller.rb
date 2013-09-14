@@ -3,22 +3,6 @@ class UsersController < ApplicationController
   before_filter :authenticate
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  private
-
-  def authenticate
-
-    admins = { 'kasper' => 'repsak' }
-
-    authenticate_or_request_with_http_basic do |username, password|
-
-      admins[username] == password
-
-    end
-
-  end
-
-  public
-
   # GET /users
   # GET /users.json
   def index
@@ -32,11 +16,17 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+
     @user = User.new
+    @teams = Team.all
+
   end
 
   # GET /users/1/edit
   def edit
+
+    @teams = Team.all
+
   end
 
   # POST /users
@@ -62,7 +52,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to(users_path) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -82,6 +72,19 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def authenticate
+
+      admins = { 'kasper' => 'repsak' }
+
+      authenticate_or_request_with_http_basic do |username, password|
+
+        admins[username] == password
+
+      end
+
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -89,6 +92,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username)
+      params.require(:user).permit(:username, :team_id)
     end
+
 end
