@@ -24,6 +24,7 @@ class TasksController < ApplicationController
   def edit
 
     @users = User.all
+    @tag_names = @task.tags.join(', ')
 
   end
 
@@ -32,15 +33,28 @@ class TasksController < ApplicationController
   def create
 
     @task = Task.new(task_params)
+    @users = User.all
+
+    @task.creator = current_user
 
     respond_to do |format|
-      if @task.save
+
+      if logged_in? and @task.save
+
+        # Tags
+        @task.tags << tags(params[:tags])
+        @task.save
+
         format.html { redirect_to(tasks_path) }
         format.json { render action: 'show', status: :created, location: @task }
+
       else
+
         format.html { render action: 'new' }
         format.json { render json: @task.errors, status: :unprocessable_entity }
+
       end
+
     end
 
   end
@@ -49,8 +63,10 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
 
+    @users = User.all
+
     respond_to do |format|
-      if @task.update(task_params)
+      if logged_in? and @task.update(task_params)
         format.html { redirect_to(tasks_path) }
         format.json { head :no_content }
       else
@@ -64,14 +80,18 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.json
   def destroy
-    @task.destroy
+
+    @task.destroy if logged_in?
+
     respond_to do |format|
       format.html { redirect_to tasks_url }
       format.json { head :no_content }
     end
+
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
@@ -81,4 +101,24 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:description, :completed, :owner_id)
     end
+
+    def tags(tag_names)
+
+      # Tags
+      tags = []
+
+      tag_names.split(',').each do |tag_name|
+
+        tag_name = tag_name.strip.downcase.gsub(' ', '-')
+        tag = Tag.find_by_name(tag_name)
+
+        tag = Tag.create(:name => tag_name) unless tag
+        tags << tag unless tags.include?(tag)
+
+      end
+
+      return tags
+
+    end
+
 end

@@ -1,29 +1,43 @@
 <%= form_for(@task) do |f| %>
+
   <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+    <div id='error_explanation'>
+
+      <h2><%= pluralize(@task.errors.count, 'error') %> prohibited this task from being saved:</h2>
 
       <ul>
-      <% @task.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
+
     </div>
+
   <% end %>
 
-  <div class="field">
+  <div class='field'>
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </div>
-  <div class="field">
+
+  <div class='tags'>
+    Tags (separated with commas)<br>
+    <%= text_field_tag :tags, (if @task.new_record? then params[:tags] else @tag_names end) %>
+  </div>
+
+  <div class='field'>
     <%= f.label :completed %><br>
     <%= f.check_box :completed %>
   </div>
-  <div class="field">
+
+  <div class='field'>
     <%= f.label :owner_id %><br>
-    <%= f.select :owner_id, options_from_collection_for_select(@users, :id, :username) %>
+    <%= f.select :owner_id, options_from_collection_for_select(@users, :id, :username, current_user.id) %>
   </div>
-  <div class="actions">
+
+  <div class='actions'>
     <%= f.submit %>
   </div>
+
 <% end %>

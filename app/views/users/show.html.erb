@@ -1,14 +1,35 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+<h1><%= @user.username %></h1>
 
 <p>
   <strong>Team:</strong>
   <%= @user.team.name %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% unless @user.tasks.empty? %>
+
+  <h2>Tasks owned</h2>
+
+  <ul>
+    <% @user.tasks.each do |task| %>
+      <li><%= link_to task.description, task %></li>
+    <% end %>
+  </ul>
+
+<% end %>
+
+<% unless @user.created_tasks.empty? %>
+
+  <h2>Tasks created</h2>
+
+  <ul>
+    <% @user.created_tasks.each do |task| %>
+      <li><%= link_to task.description, task %></li>
+    <% end %>
+  </ul>
+
+<% end %>
+
+<%= link_to 'Edit profile', edit_user_path(@user) %> |
+<%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %>

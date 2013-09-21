@@ -1,9 +1,18 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @team.name %>
-</p>
+<h1><%= @team.name %> team</h1>
+
+<% unless @team.users.empty? %>
+
+  <h2>Users</h2>
+
+  <ul>
+    <% @team.users.each do |user| %>
+      <li><%= link_to user.username, user %></li>
+    <% end %>
+  </ul>
+
+<% end %>
 
 <%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
+<%= link_to 'Destroy', @team, method: :delete, data: { confirm: 'Are you sure?' } %>

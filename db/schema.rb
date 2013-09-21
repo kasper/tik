@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130914131943) do
+ActiveRecord::Schema.define(version: 20130921141937) do
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tasks", force: true do |t|
     t.string   "description"
@@ -19,6 +32,7 @@ ActiveRecord::Schema.define(version: 20130914131943) do
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
   end
 
   create_table "teams", force: true do |t|
@@ -32,6 +46,7 @@ ActiveRecord::Schema.define(version: 20130914131943) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "team_id"
+    t.string   "password_digest"
   end
 
 end

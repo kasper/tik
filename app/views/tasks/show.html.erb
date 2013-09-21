@@ -1,9 +1,6 @@
-<p id="notice"><%= notice %></p>
+<p id='notice'><%= notice %></p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @task.description %>
-</p>
+<h1><%= @task.description %></h1>
 
 <p>
   <strong>Completed:</strong>
@@ -12,8 +9,27 @@
 
 <p>
   <strong>Owner:</strong>
-  <%= @task.owner.username %>
+  <%= link_to @task.owner.username, @task.owner %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<p>
+  <strong>Created by:</strong>
+  <%= link_to @task.creator.username, @task.creator %>
+</p>
+
+<% unless @task.tags.empty? %>
+
+  <h2>Tags</h2>
+
+  <ul>
+    <% @task.tags.each do |tag| %>
+      <li><%= link_to tag.name, tag %></li>
+    <% end %>
+  </ul>
+
+<% end %>
+
+<% if logged_in? %>
+  <%= link_to 'Edit', edit_task_path(@task) %> |
+  <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
