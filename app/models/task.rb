@@ -14,11 +14,7 @@ class Task < ActiveRecord::Base
 
   def destroy_orphaned_tags
 
-    Tag.all.each do |tag|
-
-      tag.destroy if tag.tasks.empty?
-
-    end
+    Tag.destroy_orphans
 
   end
 

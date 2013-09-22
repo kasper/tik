@@ -6,6 +6,16 @@ class Tag < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tasks, :through => :taggings
 
+  def self.destroy_orphans
+
+    Tag.all.each do |tag|
+
+      tag.destroy if tag.tasks.empty?
+
+    end
+
+  end
+
   def to_s
 
     name

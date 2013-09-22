@@ -66,13 +66,24 @@ class TasksController < ApplicationController
     @users = User.all
 
     respond_to do |format|
+
       if logged_in? and @task.update(task_params)
+
+        # Tags
+        @task.taggings.destroy_all
+        @task.tags << tags(params[:tags])
+        @task.save
+
         format.html { redirect_to(tasks_path) }
         format.json { head :no_content }
+
       else
+
         format.html { render action: 'edit' }
         format.json { render json: @task.errors, status: :unprocessable_entity }
+
       end
+
     end
 
   end
