@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
 
+  before_filter :ensure_that_logged_in, :except => [ :index, :show ]
   before_action :set_tag, only: [:show, :destroy]
 
   # GET /tags
@@ -17,7 +18,7 @@ class TagsController < ApplicationController
   # DELETE /tags/1.json
   def destroy
 
-    @tag.destroy if logged_in?
+    @tag.destroy
 
     respond_to do |format|
       format.html { redirect_to tags_url }

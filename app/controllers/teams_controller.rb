@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
 
-  before_filter :authenticate
+  before_filter :ensure_that_logged_in, :except => [ :index, :show ]
+  before_filter :ensure_that_admin, :only => [ :destroy ]
   before_action :set_team, only: [ :show, :edit, :update, :destroy ]
 
   # GET /teams
@@ -64,18 +65,6 @@ class TeamsController < ApplicationController
   end
 
   private
-
-    def authenticate
-
-      admins = { 'kasper' => 'repsak' }
-
-      authenticate_or_request_with_http_basic do |username, password|
-
-        admins[username] == password
-
-      end
-
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_team

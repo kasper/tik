@@ -10,7 +10,7 @@ tag_feature_test = Tag.create(:name => 'feature-test')
 
 # Kasper
 
-user = User.create!(:username => 'kasper', :password => 'repsak44', :password_confirmation => 'repsak44', :team_id => team.id)
+user = User.create!(:username => 'kasper', :password => 'repsak44', :password_confirmation => 'repsak44', :team_id => team.id, :admin => true)
 
 task = user.tasks.create!(:description => 'Create a new task', :completed => false, :creator_id => user.id)
 

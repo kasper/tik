@@ -30,6 +30,6 @@
 <% end %>
 
 <% if logged_in? %>
-  <%= link_to 'Edit', edit_task_path(@task) %> |
+  <%= link_to 'Edit', edit_task_path(@task) %><br>
   <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>

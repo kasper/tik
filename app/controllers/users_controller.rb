@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate
+  before_filter :ensure_that_logged_in, :except => [ :index, :show, :new, :create ]
+  before_filter :ensure_that_admin, :only => [ :destroy ]
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
 
   # GET /users
@@ -55,13 +56,15 @@ class UsersController < ApplicationController
     @teams = Team.all
 
     respond_to do |format|
-      if @user.update(user_params)
+
+      if (currently_logged_in?(@user) or current_user.admin?) and @user.update(user_params)
         format.html { redirect_to(users_path) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+
     end
 
   end
@@ -77,18 +80,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-    def authenticate
-
-      admins = { 'kasper' => 'repsak' }
-
-      authenticate_or_request_with_http_basic do |username, password|
-
-        admins[username] == password
-
-      end
-
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_user

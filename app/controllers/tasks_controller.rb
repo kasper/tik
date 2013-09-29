@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+
+  before_filter :ensure_that_logged_in, :except => [ :index, :show ]
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
@@ -39,7 +41,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
 
-      if logged_in? and @task.save
+      if @task.save
 
         # Tags
         @task.tags << tags(params[:tags])
@@ -67,7 +69,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
 
-      if logged_in? and @task.update(task_params)
+      if @task.update(task_params)
 
         # Tags
         @task.taggings.destroy_all
@@ -92,7 +94,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.json
   def destroy
 
-    @task.destroy if logged_in?
+    @task.destroy
 
     respond_to do |format|
       format.html { redirect_to tasks_url }

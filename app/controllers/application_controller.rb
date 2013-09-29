@@ -28,4 +28,16 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def ensure_that_logged_in
+
+    redirect_to login_path, :notice => 'You should be logged in.' unless logged_in?
+
+  end
+
+  def ensure_that_admin
+
+    render :status => :forbidden, :text => 'Forbidden.' unless current_user.admin?
+
+  end
+
 end

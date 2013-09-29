@@ -30,4 +30,4 @@
 
 <br>
 
-<% if logged_in? %><%= link_to 'New Task', new_task_path %><% end %>
+<%= link_to 'New Task', new_task_path if logged_in? %>
