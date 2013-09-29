@@ -31,5 +31,5 @@
 
 <% end %>
 
-<%= link_to 'Edit profile', edit_user_path(@user) if logged_in? and (currently_logged_in?(@user) or current_user.admin?) %><br>
+<% if logged_in? and (currently_logged_in?(@user) or current_user.admin?) %><%= link_to 'Edit profile', edit_user_path(@user) %><br><% end %>
 <%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } if logged_in? and current_user.admin? %>

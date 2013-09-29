@@ -5,6 +5,7 @@ FactoryGirl.define do
     username 'kasper'
     password 'repsak44'
     password_confirmation 'repsak44'
+    team
 
   end
 
@@ -13,6 +14,7 @@ FactoryGirl.define do
     username 'jack'
     password 'kcaj2222'
     password_confirmation 'kcaj2222'
+    team
 
   end
 
