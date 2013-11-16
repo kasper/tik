@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :ensure_that_logged_in, :except => [ :index, :show, :new, :create ]
+  before_filter :ensure_that_not_logged_in, :only => [ :new ]
   before_filter :ensure_that_admin, :only => [ :destroy ]
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
 

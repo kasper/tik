@@ -34,6 +34,12 @@ class ApplicationController < ActionController::Base
 
   end
 
+  def ensure_that_not_logged_in
+
+    redirect_to :root if logged_in?
+
+  end
+
   def ensure_that_admin
 
     render :status => :forbidden, :text => 'Forbidden.' unless current_user.admin?

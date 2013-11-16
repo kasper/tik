@@ -1,0 +1,155 @@
+$container-lg: 840px;
+$container-md: 640px;
+$container-sm: 420px;
+
+$brand-primary: #5751a1;
+$font-size-base: 14px;
+
+$font-size-h2: floor($font-size-base * 1.3);
+
+@import 'bootstrap';
+
+body {
+
+  padding-top: 40px;
+
+}
+
+/* Glyphicons */
+
+.glyphicon.light {
+
+  opacity: 0.5;
+
+}
+
+.glyphicon.light:hover {
+
+  opacity: 1;
+
+}
+
+/* Headers */
+
+h2 {
+
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+
+}
+
+/* Tables */
+
+.table .input-lg {
+
+  height: inherit;
+
+}
+
+#tasks tr.completed {
+
+  opacity: 0.5;
+
+}
+
+/* Lists */
+
+ul {
+
+  margin: 20px 0;
+  list-style: circle;
+
+}
+
+.dl-horizontal dt {
+
+  width: 100px;
+  color: #5b5b5b;
+
+}
+
+.dl-horizontal dd {
+
+  margin-left: 120px;
+
+}
+
+/* Inputs */
+
+.checkbox.heading input {
+
+  height: 35px;
+  margin-right: 10px;
+
+}
+
+.checkbox.heading label {
+
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.1;
+
+}
+
+/* Panels */
+
+.panel-title[data-toggle='dropdown']:hover {
+
+  cursor: pointer;
+
+}
+
+.panel-title .caret {
+
+  border-top-color: #fff;
+
+}
+
+.panel-heading .dropdown-menu {
+
+  left: -10px;
+  min-width: 200px;
+
+}
+
+/* Components */
+
+#main-panel {
+
+  margin-top: 20px;
+
+}
+
+div.filter {
+
+  margin-bottom: 10px;
+
+}
+
+span.detail {
+
+  font-weight: 400;
+  color: #848484;
+
+}
+
+h2 span.detail::before {
+
+  content: '(';
+
+}
+
+h2 span.detail::after {
+
+  content: ')';
+
+}
+
+dd span.detail {
+
+  display: block;
+
+}

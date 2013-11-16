@@ -20,7 +20,7 @@ describe 'New team page' do
 
     click_button('Create Team')
 
-    expect(page).to have_content 'Listing teams'
+    expect(page).to have_content 'Teams'
     expect(page).to have_content 'Software'
 
   end

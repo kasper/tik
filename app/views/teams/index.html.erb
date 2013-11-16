@@ -1,11 +1,10 @@
-<h1>Listing teams</h1>
+<% title 'Teams' %>
 
-<table>
+<table class='table'>
+
   <thead>
     <tr>
       <th>Name</th>
-      <% if logged_in? %><th></th><% end %>
-      <% if logged_in? and current_user.admin? %><th></th><% end %>
     </tr>
   </thead>
 
@@ -13,13 +12,10 @@
     <% @teams.each do |team| %>
       <tr>
         <td><%= link_to team.name, team %></td>
-        <% if logged_in? %><td><%= link_to 'Edit', edit_team_path(team) %></td><% end %>
-        <% if logged_in? and current_user.admin? %><td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td><% end %>
       </tr>
     <% end %>
   </tbody>
+
 </table>
 
-<br>
-
-<%= link_to 'New Team', new_team_path if logged_in? %>
+<%= link_to 'New Team', new_team_path, :class => 'btn btn-default' if logged_in? %>

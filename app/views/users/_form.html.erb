@@ -1,45 +1,37 @@
+<% if @user.errors.any? %>
+
+  <div class='alert alert-danger'>
+    <%= @user.errors.full_messages.join('. ') %>.
+  </div>
+
+<% end %>
+
 <%= form_for(@user) do |f| %>
 
-  <% if @user.errors.any? %>
-
-    <div id='error_explanation'>
-
-      <h2><%= pluralize(@user.errors.count, 'error') %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-
-    </div>
-
-  <% end %>
-
   <% if @user.new_record? %>
-    <div class='field'>
-      <%= f.label :username %><br>
-      <%= f.text_field :username %>
+    <div class='form-group'>
+      <%= f.label :username %>
+      <%= f.text_field :username, :class => 'form-control' %>
+      <p class='help-block'>Username must be at least 3 characters long.</p>
     </div>
   <% end %>
 
-  <div class='field'>
-    <%= f.label :password %><br>
-    <%= f.password_field :password %>
+  <div class='form-group'>
+    <%= f.label :password %>
+    <%= f.password_field :password, :class => 'form-control' %>
+    <p class='help-block'>Password must be at least 8 characters long.</p>
   </div>
 
-  <div class='field'>
-    <%= f.label :password_confirmation %><br>
-    <%= f.password_field :password_confirmation %>
+  <div class='form-group'>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, :class => 'form-control' %>
   </div>
 
-  <div class='field'>
-    <%= f.label :team_id %><br>
-    <%= f.select :team_id, options_from_collection_for_select(@teams, :id, :name, (unless @user.new_record? then @user.team.id end)) %>
+  <div class='form-group'>
+    <%= f.label :team_id %>
+    <%= f.select :team_id, options_from_collection_for_select(@teams, :id, :name, (unless @user.new_record? then @user.team.id end)), {}, :class => 'form-control' %>
   </div>
 
-  <div class='actions'>
-    <%= f.submit (unless logged_in? then 'Sign up' else 'Save' end) %>
-  </div>
+  <%= f.submit (unless logged_in? then 'Sign up' else 'Save' end), :class => 'btn btn-default' %>
 
 <% end %>

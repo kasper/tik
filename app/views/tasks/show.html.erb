@@ -1,25 +1,34 @@
-<p id='notice'><%= notice %></p>
+<% title 'Task' %>
 
-<h1><%= @task.description %></h1>
+<%= form_for(@task, :method => :patch) do |f| %>
 
-<p>
-  <strong>Completed:</strong>
-  <%= @task.completed %>
-</p>
+  <div class='checkbox heading'>
+    <%= f.label :completed do %>
+      <%= f.check_box :completed, :class => 'input-lg', :disabled => !logged_in?, :onclick => 'submit()' %> <%= @task.description %>
+    <% end %>
+  </div>
 
-<p>
-  <strong>Owner:</strong>
-  <%= link_to @task.owner.username, @task.owner %>
-</p>
+<% end %>
 
-<p>
-  <strong>Created by:</strong>
-  <%= link_to @task.creator.username, @task.creator %>
-</p>
+<dl class='dl-horizontal'>
+
+  <dt>Owner</dt>
+  <dd><%= link_to @task.owner.username, @task.owner %></dd>
+
+  <dt>Creator</dt>
+  <dd><%= link_to @task.creator.username, @task.creator %></dd>
+
+  <dt>Created</dt>
+  <dd><%= time_ago_in_words(@task.created_at) %> ago <span class='detail'><%= @task.created_at.to_formatted_s(:long_ordinal) %></span></dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@task.updated_at) %> ago <span class='detail'><%= @task.updated_at.to_formatted_s(:long_ordinal) %></span></dd>
+
+</dl>
 
 <% unless @task.tags.empty? %>
 
-  <h2>Tags</h2>
+  <h2>Tags <span class='detail'><%= @task.tags.count %></span></h2>
 
   <ul>
     <% @task.tags.each do |tag| %>
@@ -30,6 +39,6 @@
 <% end %>
 
 <% if logged_in? %>
-  <%= link_to 'Edit', edit_task_path(@task) %><br>
-  <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Edit', edit_task_path(@task), :class => 'btn btn-default' %>
+  <%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default' %>
 <% end %>

@@ -1,10 +1,17 @@
-<p id='notice'><%= notice %></p>
+<% title 'Team' %>
 
 <h1><%= @team.name %> team</h1>
 
+<dl class='dl-horizontal'>
+
+  <dt>Created</dt>
+  <dd><%= time_ago_in_words(@team.created_at) %> ago <span class='detail'><%= @team.created_at.to_formatted_s(:long_ordinal) %></dd>
+
+</dl>
+
 <% unless @team.users.empty? %>
 
-  <h2>Users</h2>
+  <h2>Users <span class='detail'><%= @team.users.count %></span></h2>
 
   <ul>
     <% @team.users.each do |user| %>
@@ -14,5 +21,5 @@
 
 <% end %>
 
-<% if logged_in? %><%= link_to 'Edit', edit_team_path(@team) %><br><% end %>
-<%= link_to 'Destroy', @team, method: :delete, data: { confirm: 'Are you sure?' } if logged_in? and current_user.admin? %>
+<%= link_to 'Edit', edit_team_path(@team), :class => 'btn btn-default' if logged_in? %>
+<%= link_to 'Destroy', @team, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default' if logged_in? and current_user.admin? %>

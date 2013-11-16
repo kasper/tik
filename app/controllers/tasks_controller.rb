@@ -6,7 +6,15 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+
+    filter = 'all'
+
+    if filter_set.include?(params[:filter])
+      filter = params[:filter]
+    end
+
+    @tasks = Task.send(filter).order(:created_at => :desc)
+
   end
 
   # GET /tasks/1
@@ -66,17 +74,22 @@ class TasksController < ApplicationController
   def update
 
     @users = User.all
+    @tag_names = @task.tags.join(', ')
 
     respond_to do |format|
 
       if @task.update(task_params)
 
-        # Tags
-        @task.taggings.destroy_all
-        @task.tags << tags(params[:tags])
-        @task.save
+        if params[:tags]
 
-        format.html { redirect_to(tasks_path) }
+          # Tags
+          @task.taggings.destroy_all
+          @task.tags << tags(params[:tags])
+          @task.save
+
+        end
+
+        format.html { if task_params.size.eql?(1) and task_params.key?('completed') then redirect_to(:back) else redirect_to(task_path) end }
         format.json { head :no_content }
 
       else
@@ -115,6 +128,12 @@ class TasksController < ApplicationController
       params.require(:task).permit(:description, :completed, :owner_id)
     end
 
+    def filter_set
+
+      [ 'all', 'uncompleted', 'completed' ]
+
+    end
+
     def tags(tag_names)
 
       # Tags
@@ -122,7 +141,7 @@ class TasksController < ApplicationController
 
       tag_names.split(',').each do |tag_name|
 
-        tag_name = tag_name.strip.downcase.gsub(' ', '-')
+        tag_name = tag_name.strip.downcase.gsub(/ +/, '-')
         tag = Tag.find_by_name(tag_name)
 
         tag = Tag.create(:name => tag_name) unless tag

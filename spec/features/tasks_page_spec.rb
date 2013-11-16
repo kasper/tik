@@ -8,7 +8,7 @@ describe 'Tasks page' do
 
     visit tasks_path
 
-    expect(page).to have_content 'Listing tasks'
+    expect(page).to have_content 'Tasks'
 
   end
 

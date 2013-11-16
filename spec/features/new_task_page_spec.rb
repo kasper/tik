@@ -21,7 +21,7 @@ describe 'New task page' do
 
     click_button('Create Task')
 
-    expect(page).to have_content 'Listing tasks'
+    expect(page).to have_content 'Tasks'
     expect(page).to have_content 'Test adding task'
 
   end
@@ -61,7 +61,7 @@ describe 'New task page' do
 
     visit tags_path
 
-    expect(page.all('ul li').count - page.all('nav ul li').count).to be 3
+    expect(page.all('#main-panel .panel-body li').count).to be 3
 
   end
 

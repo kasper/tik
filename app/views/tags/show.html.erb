@@ -1,10 +1,10 @@
-<p id='notice'><%= notice %></p>
+<% title 'Tag' %>
 
 <h1><%= @tag.name %></h1>
 
 <% unless @tag.tasks.empty? %>
 
-  <h2>Tasks</h2>
+  <h2>Tasks for tag <span class='detail'><%= @tag.tasks.count %></span></h2>
 
   <ul>
     <% @tag.tasks.each do |task| %>
@@ -14,4 +14,4 @@
 
 <% end %>
 
-<%= link_to 'Destroy', @tag, method: :delete, data: { confirm: 'Are you sure?' } if logged_in? %>
+<%= link_to 'Destroy', @tag, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default' if logged_in? %>

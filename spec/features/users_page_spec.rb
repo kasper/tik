@@ -8,7 +8,7 @@ describe 'Users page' do
 
     visit users_path
 
-    expect(page).to have_content 'Listing users'
+    expect(page).to have_content 'Users'
 
   end
 

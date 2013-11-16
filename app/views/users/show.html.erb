@@ -1,15 +1,20 @@
-<p id='notice'><%= notice %></p>
+<% title 'User' %>
 
 <h1><%= @user.username %></h1>
 
-<p>
-  <strong>Team:</strong>
-  <%= @user.team.name %>
-</p>
+<dl class='dl-horizontal'>
+
+  <dt>Team</dt>
+  <dd><%= @user.team.name %></dd>
+
+  <dt>Joined</dt>
+  <dd><%= time_ago_in_words(@user.created_at) %> ago <span class='detail'><%= @user.created_at.to_formatted_s(:long_ordinal) %></dd>
+
+</dl>
 
 <% unless @user.tasks.empty? %>
 
-  <h2>Tasks owned</h2>
+  <h2>Tasks owned <span class='detail'><%= @user.tasks.count %></span></h2>
 
   <ul>
     <% @user.tasks.each do |task| %>
@@ -21,7 +26,7 @@
 
 <% unless @user.created_tasks.empty? %>
 
-  <h2>Tasks created</h2>
+  <h2>Tasks created <span class='detail'><%= @user.created_tasks.count %></span></h2>
 
   <ul>
     <% @user.created_tasks.each do |task| %>
@@ -31,5 +36,5 @@
 
 <% end %>
 
-<% if logged_in? and (currently_logged_in?(@user) or current_user.admin?) %><%= link_to 'Edit profile', edit_user_path(@user) %><br><% end %>
-<%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } if logged_in? and current_user.admin? %>
+<%= link_to 'Edit Profile', edit_user_path(@user), :class => 'btn btn-default' if logged_in? and (currently_logged_in?(@user) or current_user.admin?) %>
+<%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default' if logged_in? and current_user.admin? %>

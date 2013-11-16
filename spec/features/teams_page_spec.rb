@@ -8,7 +8,7 @@ describe 'Teams page' do
 
     visit teams_path
 
-    expect(page).to have_content 'Listing teams'
+    expect(page).to have_content 'Teams'
 
   end
 

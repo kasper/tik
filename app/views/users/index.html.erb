@@ -1,12 +1,11 @@
-<h1>Listing users</h1>
+<% title 'Users' %>
 
-<table>
+<table class='table'>
+
   <thead>
     <tr>
       <th>Username</th>
       <th>Team</th>
-      <% if logged_in? %><th></th><% end %>
-      <% if logged_in? and current_user.admin? %><th></th><% end %>
     </tr>
   </thead>
 
@@ -14,14 +13,11 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.username, user %></td>
-        <td><%= user.team.name %></td>
-        <% if logged_in? and (currently_logged_in?(user) or current_user.admin?) %><td><%= link_to 'Edit profile', edit_user_path(user) %></td><% end %>
-        <% if logged_in? and current_user.admin? %><td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td><% end %>
+        <td><%= link_to user.team.name, user.team %></td>
       </tr>
     <% end %>
   </tbody>
+
 </table>
 
-<br>
-
-<%= link_to 'Sign up', signup_path %>
+<%= link_to 'Sign Up', signup_path, :class => 'btn btn-default' unless logged_in? %>

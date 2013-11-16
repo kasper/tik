@@ -12,6 +12,9 @@ class Task < ActiveRecord::Base
 
   after_destroy :destroy_orphaned_tags
 
+  scope :uncompleted, -> { where(:completed => false) }
+  scope :completed, -> { where(:completed => true) }
+
   def destroy_orphaned_tags
 
     Tag.destroy_orphans

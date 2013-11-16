@@ -11,7 +11,7 @@ describe 'Login page' do
     fill_in('username', :with => user.username)
     fill_in('password', :with => 'wrong')
 
-    click_button('Log in')
+    click_button('Log In')
 
     expect(current_path).to eq login_path
     expect(page).to have_content 'Username or password do not match.'
@@ -25,7 +25,7 @@ describe 'Login page' do
     fill_in('username', :with => user.username)
     fill_in('password', :with => 'repsak44')
 
-    click_button('Log in')
+    click_button('Log In')
 
     expect(current_path).to eq '/'
 

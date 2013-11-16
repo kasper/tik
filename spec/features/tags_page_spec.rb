@@ -8,7 +8,7 @@ describe 'Tags page' do
 
     visit tags_path
 
-    expect(page).to have_content 'Listing tags'
+    expect(page).to have_content 'Tags'
 
   end
 
